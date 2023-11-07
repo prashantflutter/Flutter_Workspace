@@ -1,3 +1,5 @@
+
+
     21. What is inheritance?
     Ans :-  one class all functionality pass other class is called inheritance
 
@@ -51,27 +53,29 @@
     31. What happens if the parent and the child class have a field with
        same identifier? B16. Are constructors and initializers also inherited to
        sub classes?
-   Ans :- if the parent and child class have a same field then child identifier use                 first.
+   Ans :- if the parent and child class have a same field then child identifier use first.
           yes constructors and initializers also inherited to sub class.
 
    32. How do you restrict a member of a class from inheriting by its sub classes?
-   Ans :- No we can don't restrict a member of a class using inheriting by its sub          classes
+   Ans :- No we can don't restrict a member of a class using inheriting by its sub classes.
 
    33. How do you implement multiple inheritance in Dart?
-   Ans :- we can not implement multiple inheritance in dart
+   Ans :- we can not implement multiple inheritance in dart.
 
    34. Can a class extend by itself in Dart?
    Ans :- class not extend by itself in dart.
 
   35. How do you override a private method in Dart?
-  Ans :-
+  Ans :-The overriding method allows a method in a child class to override the same method in the parent class. Use the super keyword to 
+         call the same method from the parent class.
+
 
   36. When to overload a method in Dart and when to override it?
   Ans :- when override a method then we use abstract and implement as interface
-        and overloading then we use optional parameter
+        and overloading then we use optional parameter.
 
    38. How do you prevent overriding a Dart method without using the final modifier?
-   Ans :-
+   Ans :- Simple we use underscore and set prevent overriding without using final modifire.
 
    39. What are the rules of method overriding in Dart?
    Ans :- The return type should be the same as in the method present in the superclass.
@@ -84,5 +88,41 @@
 
 
  41. What happens when a class implements two interfaces and both declare field (variable) with same name?
-   Ans :- if the class implement two interfaces and declare field same then one method show in class because
-    dart is dynamic language supported
+   Ans :- if the class implement two interfaces and declare field same then one method show in class because dart is dynamic language 
+         supported.
+
+ 42. Can a subclass instance method override a superclass static method? 
+  Ans :- In Dart, a subclass instance method cannot override a superclass static method.Method overriding is a concept that applies to 
+         instance methods, not static methods. Static methods in Dart are associated with the class itself rather than instances of the 
+         class, and they are not inherited or overridden in the same way as instance methods.
+
+  43.Can a subclass static method hide superclass instance method?
+   Ans :- subclass static method not hide superclass instance method.
+
+  44.Can a superclass access subclass member?
+    Ans :- superclass not access subclass member.
+
+  45.Difference between object oriented and object based language.
+   Ans :- 
+   1.Object-Oriented Language:
+   An object-oriented language fully supports all the core principles of object-oriented programming, which typically include 
+   encapsulation, inheritance, and polymorphism.
+   In an object-oriented language, everything is treated as an object. This includes not only instances of classes but also 
+   primitive types and functions. All data and behavior are encapsulated in objects.
+   Object-oriented languages allow for the creation of classes and objects with attributes (properties) and methods (functions), 
+   enabling the modeling of complex,reusable, and modular code.
+
+  2.Object-Based Language:
+   An object-based language may support some object-oriented features but not necessarily    all of them.
+   In an object-based language, not everything is treated as an object. It may have    primitive data types (such as integers, floats, 
+   etc.) that are not objects.
+   Object-based languages allow for the creation of classes and objects, but they may    lack some advanced features of full-fledged 
+   object-oriented languages, such as support for inheritance and polymorphism.
+
+   
+
+
+
+
+
+
