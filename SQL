@@ -2,6 +2,10 @@
 
 https://www.educative.io/answers/how-to-make-calls-in-flutter
 
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-feature android:name="android.hardware.telephony" android:required="false" />
+
+
 DDL
 1. create database
 CREATE DATABASE databasenm;
