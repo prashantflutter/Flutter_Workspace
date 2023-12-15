@@ -265,6 +265,8 @@ class _AllDialogsPageState extends State<AllDialogsPage> {
 
   void FourDialog(){
     showDialog(context: context, builder: (context){
+      TextEditingController userName = TextEditingController();
+      TextEditingController password = TextEditingController();
       return SimpleDialog(
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
@@ -290,6 +292,7 @@ class _AllDialogsPageState extends State<AllDialogsPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: TextField(
+              controller: userName,
              decoration: InputDecoration(
                prefixIcon: Icon(Icons.person_2_outlined),
                 hintText: "UserName"
@@ -299,6 +302,8 @@ class _AllDialogsPageState extends State<AllDialogsPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: TextField(
+              controller: password,
+              obscureText: true,
               decoration: InputDecoration(
                   prefixIcon: Icon(Icons.lock),
                   hintText: "Password",
@@ -312,6 +317,9 @@ class _AllDialogsPageState extends State<AllDialogsPage> {
             child: ElevatedButton(
                 onPressed: (){
                   Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("UserName : ${userName.text} \nPassword : ${password.text}",style: TextStyle(color: Colors.white),))
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
