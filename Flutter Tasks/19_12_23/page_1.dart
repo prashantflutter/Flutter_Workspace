@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 
+
 class ListDemo1Page extends StatefulWidget {
   const ListDemo1Page({super.key});
 
@@ -16,6 +17,7 @@ class _ListDemo1PageState extends State<ListDemo1Page> {
   List<String> studentNumber = ["002987654001","002987654002","002987654003","002987654004","002987654005", "002987654006","002987654007","002987654008","002987654009","002987654010",
                                  "002987654011","002987654012","002987654013","002987654014", "002987654015","002987654016","002987654017","002987654018","002987654019"];
   late List<bool> _isCheckedList;
+
   @override
   void initState() {
     super.initState();
