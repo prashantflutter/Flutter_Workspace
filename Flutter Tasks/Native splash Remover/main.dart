@@ -6,9 +6,9 @@ import 'screes/new_enquire_screen.dart';
 import 'screes/splash_screen.dart';
 
 void main() {
-  // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  FlutterNativeSplash.remove();
+   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+    FlutterNativeSplash.remove();
   runApp(const MyApp());
 
 }
