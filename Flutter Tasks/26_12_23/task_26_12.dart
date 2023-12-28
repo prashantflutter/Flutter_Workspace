@@ -40,17 +40,14 @@ class _CarouselSliderWithGridState extends State<CarouselSliderWithGrid> {
       body: Column(
         children: [
           CarouselSlider(
-            options: CarouselOptions(height: 400.0),
+            options: CarouselOptions(height: 250.0),
             items: imagesList.map((i) {
               return Builder(
                 builder: (BuildContext context) {
                   return Container(
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      decoration: BoxDecoration(
-                          color: Colors.amber
-                      ),
-                      child: Text('text $i', style: TextStyle(fontSize: 16.0),)
+                      child: Image.network(imagesGridList[i])
                   );
                 },
               );
