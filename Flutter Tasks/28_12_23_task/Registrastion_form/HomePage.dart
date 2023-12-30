@@ -56,8 +56,6 @@ class _HomePageState extends State<HomePage> {
                       keyboardType: TextInputType.name,
                       hintText:   widget.lName,
                       contentPadding: EdgeInsets.symmetric(horizontal: 23)
-
-
                   ),
                 ),
               ],
@@ -115,10 +113,8 @@ class _HomePageState extends State<HomePage> {
                      ),
                   
                    ],
-                                 ),
+                 ),
                 )
-
-
               ],
             ),
 
