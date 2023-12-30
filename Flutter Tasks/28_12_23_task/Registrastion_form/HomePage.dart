@@ -100,16 +100,34 @@ class _HomePageState extends State<HomePage> {
                     height: 60,
                     alignment: Alignment.topCenter,
                     child: Text('Hobbies : ',style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500),)),
-                Column(
-                 children: [
-                   widget.hobbies1 != ""?Text(widget.hobbies1!,style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500),):Container(),
-                   widget.hobbies2 != ""?Text(widget.hobbies2!,style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500),):Container(),
-                   widget.hobbies3 != ""?Text(widget.hobbies3!,style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500),):Container(),
-                   widget.hobbies4 != ""?Text(widget.hobbies4!,style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500),):Container(),
+                Expanded(
+                  child: Column(
+                   children: [
+                     Row(
+                       mainAxisAlignment: MainAxisAlignment.start,
+                       children: [
+                         widget.hobbies1 != ""?Text(widget.hobbies1!,style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500),):Container(),
+                         widget.hobbies1 != ""?SizedBox(width: 20,):SizedBox(),
+                         widget.hobbies2 != ""?Text(widget.hobbies2!,style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500),):Container(),
+                       ],
+                     ),
+                     Row(
+                       mainAxisAlignment: MainAxisAlignment.start,
+                       children: [
+                         widget.hobbies3 != ""?Text(widget.hobbies3!,style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500),):Container(),
+                         widget.hobbies3 != ""?SizedBox(width: 20,):SizedBox(),
+                         widget.hobbies4 != ""?Text(widget.hobbies4!,style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.w500),):Container(),
+                  
+                       ],
+                     ),
+                  
+                   ],
+                                 ),
+                )
 
-                 ],
-               )
 
+              ],
+            ),
 
               ],
             ),
