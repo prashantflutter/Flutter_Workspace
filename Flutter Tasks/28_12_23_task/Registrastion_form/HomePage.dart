@@ -32,16 +32,9 @@ class _HomePageState extends State<HomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("  Thynk Unlimited",style: TextStyle(color: Colors.white,fontSize: 22,fontWeight: FontWeight.bold)),
+                  Text("  ${widget.fName} Details",style: TextStyle(color: Colors.white,fontSize: 22,fontWeight: FontWeight.bold)),
                 ],
               ),
-            ),
-            SizedBox(height: 20,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text("   Registration",style: TextStyle(color: primColor,fontSize: 16,fontWeight: FontWeight.w400)),
-              ],
             ),
             SizedBox(height: 20,),
             Row(
