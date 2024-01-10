@@ -20,41 +20,174 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _nameController = TextEditingController();
-  final List<String> _nameList = [];
+  final TextEditingController _lNameController = TextEditingController();
+  final TextEditingController _courseController = TextEditingController();
+  final TextEditingController _companyController = TextEditingController();
+  final List<UserModel> _nameList = [];
+
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final TextStyle textStyle = TextStyle(fontSize: size.height*0.016);
+    final TextStyle subtitleStyle = TextStyle(fontSize: size.height*0.013);
     return Scaffold(
       appBar: AppBar(
-        title: Text('ListView Example'),
+        title: Text('Task 78'),
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: _nameController,
-              decoration: InputDecoration(labelText: 'Enter a name'),
+          SizedBox(height: 20,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                width: size.width*0.45,
+                child: TextField(
+                  controller: _nameController,
+                  cursorColor: Colors.blue.shade700,
+                  decoration: InputDecoration(
+                    labelText: ' Enter First Name ',
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.blue.shade700)
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.blue.shade700)
+                    ),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15,vertical: 15)
+                  ),
+                ),
+              ),
+              Container(
+                width: size.width*0.45,
+                child: TextField(
+                  controller: _lNameController,
+                  cursorColor: Colors.blue.shade700,
+                  decoration: InputDecoration(
+                    labelText: ' Enter Last Name ',
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.blue.shade700)
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.blue.shade700)
+                    ),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15,vertical: 15)
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 20,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                width: size.width*0.45,
+                child: TextField(
+                  controller: _courseController,
+                  cursorColor: Colors.blue.shade700,
+                  decoration: InputDecoration(
+                    labelText: ' Enter Course Name ',
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.blue.shade700)
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.blue.shade700)
+                    ),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15,vertical: 15)
+                  ),
+                ),
+              ),
+              Container(
+                width: size.width*0.45,
+                child: TextField(
+                  controller: _companyController,
+                  cursorColor: Colors.blue.shade700,
+                  decoration: InputDecoration(
+                    labelText: ' Enter Company Name ',
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.blue.shade700)
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.blue.shade700)
+                    ),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15,vertical: 15)
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: size.width * 0.06,),
+          SizedBox(
+            width: size.width * 0.4,
+            height: 60,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue.shade700,elevation: 2),
+              onPressed: () {
+                _addNameToList();
+                _nameController.clear();
+                _lNameController.clear();
+                _courseController.clear();
+                _companyController.clear();
+              },
+              child: Text('Add to List',style: TextStyle(color: Colors.white),)
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              _addNameToList();
-            },
-            child: Text('Add to List'),
-          ),
+          SizedBox(height: size.width * 0.06,),
+          _nameList.isNotEmpty?Row(
+            children: [
+              SizedBox(width: size.width * 0.05,),
+              Text('Added Data : ',style:textStyle,),
+            ],
+          ):SizedBox(),
           Expanded(
             child: ListView.builder(
               itemCount: _nameList.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(_nameList[index]),
-                  onTap: () {
-                    _showNameDialog(_nameList[index]);
-                  },
-                  onLongPress: () {
-                    _showContextMenu(context, _nameList[index]);
-                  },
+                final mIndex = _nameList[index];
+                return Container(
+                  width: double.infinity,
+                  height: size.height*0.07,
+                  margin: EdgeInsets.symmetric(horizontal: 30,vertical: 10),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: Colors.blue.shade700,
+                    )
+                  ),
+                  child: ListTile(
+                    leading: Icon(Icons.account_circle_outlined,size: 55,color: Colors.blue.shade700,),
+                    title: Row(
+                      children: [
+                        Text(_nameList[index].fName,style:textStyle,),
+                        SizedBox(width: 5,),
+                        Text(_nameList[index].lName,style:textStyle,),
+                      ],
+                    ),
+                    subtitle: Row(
+                      children: [
+                        Text("Course Name : ${_nameList[index].courseName}",style: subtitleStyle,),
+                        SizedBox(width: 20,),
+                        Text('Company Name : ${_nameList[index].companyName}',style: subtitleStyle,),
+                      ],
+                    ),
+
+                    onTap: () {
+                      _showNameDialog(mIndex.fName,mIndex.lName,mIndex.courseName,mIndex.companyName,context);
+                    },
+                    onLongPress: () {
+                      _showContextMenu(context, _nameList[index].lName,index);
+                    },
+                  ),
                 );
               },
             ),
@@ -68,19 +201,47 @@ class _MyHomePageState extends State<MyHomePage> {
     String name = _nameController.text;
     if (name.isNotEmpty) {
       setState(() {
-        _nameList.add(name);
+        // _nameList.add(name);
+        _nameList.add(UserModel(_nameController.text, _lNameController.text, _courseController.text, _companyController.text));
         _nameController.clear();
       });
     }
   }
 
-  void _showNameDialog(String name) {
+  void _showNameDialog(String name,String lastName,String course,String company,BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final TextStyle textStyle = TextStyle(fontSize: size.height*0.016);
+    final TextStyle subtitleStyle = TextStyle(fontSize: size.height*0.013);
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Selected Name'),
-          content: Text(name),
+          insetPadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          title: Text('Selected User'),
+          content: Container(
+            width: size.width-400,
+            height: size.height*0.2,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.account_circle_outlined,size: size.width*0.1,),
+                SizedBox(height: 10,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(name,style: textStyle,),
+                    Text(lastName,style: textStyle,),
+                  ],
+                ),
+                SizedBox(height: 5,),
+                Text('Course  Name : ${course}',style: subtitleStyle),
+                SizedBox(height: 5,),
+                Text('Company Name : ${company}',style: subtitleStyle),
+              ],
+            ),
+          ),
           actions: [
             TextButton(
               onPressed: () {
@@ -94,7 +255,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _showContextMenu(BuildContext context, String selectedName) {
+  void _showContextMenu(BuildContext context, String selectedName,int index) {
     final _editController = TextEditingController(text: selectedName);
 
     showDialog(
@@ -113,7 +274,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  _showEditDialog(selectedName, _editController);
+                  _showEditDialog(selectedName, _editController,index);
                 },
                 child: Text('Edit Item'),
               ),
@@ -163,7 +324,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _showEditDialog(String selectedName, TextEditingController editController) {
+  void _showEditDialog(String selectedName, TextEditingController editController,int index) {
     showDialog(
       context: context,
       builder: (context) {
@@ -179,7 +340,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             TextButton(
               onPressed: () {
-                _editItem(selectedName, editController.text);
+                _editItem(selectedName, editController.text,index);
                 Navigator.pop(context);
               },
               child: Text('Save'),
@@ -190,10 +351,20 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _editItem(String oldName, String newName) {
+  void _editItem(String oldName, String newName,int index1) {
     setState(() {
-      int index = _nameList.indexOf(oldName);
-      _nameList[index] = newName;
+      int index = _nameList[index1].fName.indexOf(oldName);
+      _nameList[index].fName = newName;
     });
   }
+
+}
+
+class UserModel{
+  late String fName;
+  late String lName;
+  late String courseName;
+  late String companyName;
+
+  UserModel(this.fName, this.lName, this.courseName, this.companyName);
 }
