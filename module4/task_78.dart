@@ -185,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       _showNameDialog(mIndex.fName,mIndex.lName,mIndex.courseName,mIndex.companyName,context);
                     },
                     onLongPress: () {
-                      _showContextMenu(context, _nameList[index].lName,index);
+                      _showContextMenu(context, mIndex.fName,mIndex.lName,mIndex.courseName,mIndex.companyName,index);
                     },
                   ),
                 );
@@ -255,8 +255,11 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _showContextMenu(BuildContext context, String selectedName,int index) {
-    final _editController = TextEditingController(text: selectedName);
+  void _showContextMenu(BuildContext context, String selectedFName,String selectedLName,String selectedCourse,String selectedCompany,int index) {
+    final _editFNameController = TextEditingController(text: selectedFName);
+    final _editLNameController = TextEditingController(text: selectedLName);
+    final _editCourseController = TextEditingController(text: selectedCourse);
+    final _editCompanyController = TextEditingController(text: selectedCompany);
 
     showDialog(
       context: context,
@@ -268,13 +271,13 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  _showDeleteConfirmationDialog(selectedName);
+                  _showDeleteConfirmationDialog(selectedFName);
                 },
                 child: Text('Delete Item'),
               ),
               ElevatedButton(
                 onPressed: () {
-                  _showEditDialog(selectedName, _editController,index);
+                  _showEditDialog(selectedFName,selectedLName,selectedCourse,selectedCompany, _editFNameController,_editLNameController,_editCourseController,_editCompanyController,index);
                 },
                 child: Text('Edit Item'),
               ),
@@ -324,13 +327,31 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _showEditDialog(String selectedName, TextEditingController editController,int index) {
+  void _showEditDialog(String selectedFName,String selectedLName,String selectedCourse,String selectedCompany,TextEditingController editFNameController,TextEditingController editLNameController,TextEditingController editCourseController,TextEditingController editCompanyController,int index) {
+    final size = MediaQuery.of(context).size;
+    final TextStyle textStyle = TextStyle(fontSize: size.height*0.016);
+    final TextStyle subtitleStyle = TextStyle(fontSize: size.height*0.013);
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Edit Item'),
-          content: TextField(controller: editController),
+          title: Text('Update User Data'),
+          content: Container(
+            width: size.width-400,
+            // height: size.height*0.6,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(controller: editFNameController),
+                SizedBox(height: 10,),
+                TextField(controller: editLNameController),
+                SizedBox(height: 10,),
+                TextField(controller: editCourseController),
+                SizedBox(height: 10,),
+                TextField(controller: editCompanyController),
+              ],
+            ),
+          ),
           actions: [
             TextButton(
               onPressed: () {
@@ -340,7 +361,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             TextButton(
               onPressed: () {
-                _editItem(selectedName, editController.text,index);
+                _editItem(selectedFName, editFNameController.text,selectedLName, editLNameController.text,selectedCourse, editCourseController.text,selectedCompany, editCompanyController.text,index);
                 Navigator.pop(context);
               },
               child: Text('Save'),
@@ -351,10 +372,16 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _editItem(String oldName, String newName,int index1) {
+  void _editItem(String oldFName, String newFName,String oldLName, String newLName,String oldCourse, String newCourse,String oldCompany, String newCompany,int mIndex) {
     setState(() {
-      int index = _nameList[index1].fName.indexOf(oldName);
-      _nameList[index].fName = newName;
+      int index1 = _nameList[mIndex].fName.indexOf(oldFName);
+      int index2 = _nameList[mIndex].lName.indexOf(oldLName);
+      int index3 = _nameList[mIndex].courseName.indexOf(oldCourse);
+      int index4= _nameList[mIndex].companyName.indexOf(oldCompany);
+      _nameList[index1].fName = newFName;
+      _nameList[index2].lName = newLName;
+      _nameList[index3].courseName = newCourse;
+      _nameList[index4].companyName = newCompany;
     });
   }
 
