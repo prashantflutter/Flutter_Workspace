@@ -1,3 +1,4 @@
+import 'package:Chartered/screens/splash_screen_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -8,6 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: MyHomePage(),
     );
   }
@@ -19,6 +21,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _lNameController = TextEditingController();
   final TextEditingController _courseController = TextEditingController();
@@ -33,7 +36,8 @@ class _MyHomePageState extends State<MyHomePage> {
     final TextStyle subtitleStyle = TextStyle(fontSize: size.height*0.013);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Task 78'),
+        backgroundColor: Colors.blue,
+        title: Text('User Data add in List',style: TextStyle(color: Colors.white)),
       ),
       body: Column(
         children: [
@@ -132,11 +136,30 @@ class _MyHomePageState extends State<MyHomePage> {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.blue.shade700,elevation: 2),
               onPressed: () {
-                _addNameToList();
-                _nameController.clear();
-                _lNameController.clear();
-                _courseController.clear();
-                _companyController.clear();
+                if(_nameController.text.isEmpty || _lNameController.text.isEmpty||_companyController.text.isEmpty || _courseController.text.isEmpty){
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Please fill all details!',style: TextStyle(color: Colors.white),),
+                      backgroundColor: Colors.redAccent,
+                      behavior: SnackBarBehavior.floating,
+                    ),
+                  );
+                }else{
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('successfully added user data...',style: TextStyle(color: Colors.white),),
+                      backgroundColor: Colors.green,
+                      behavior: SnackBarBehavior.floating,
+
+                    ),
+                  );
+                  _addNameToList();
+                  _nameController.clear();
+                  _lNameController.clear();
+                  _courseController.clear();
+                  _companyController.clear();
+                }
+
               },
               child: Text('Add to List',style: TextStyle(color: Colors.white),)
             ),
@@ -155,8 +178,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 final mIndex = _nameList[index];
                 return Container(
                   width: double.infinity,
-                  height: size.height*0.07,
-                  margin: EdgeInsets.symmetric(horizontal: 30,vertical: 10),
+                  // height: size.height*0.07,
+                  margin: EdgeInsets.symmetric(horizontal: size.height*0.02,vertical: 10),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
@@ -165,7 +188,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     )
                   ),
                   child: ListTile(
-                    leading: Icon(Icons.account_circle_outlined,size: 55,color: Colors.blue.shade700,),
+                    leading: Icon(Icons.account_circle_outlined,size: size.height*0.050,color: Colors.blue.shade700,),
                     title: Row(
                       children: [
                         Text(_nameList[index].fName,style:textStyle,),
@@ -247,7 +270,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('OK'),
+              child: Text('OK',style: TextStyle(color: Colors.blue.shade700)),
             ),
           ],
         );
@@ -271,21 +294,23 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  _showDeleteConfirmationDialog(selectedFName);
+                  Navigator.pop(context);
+                  _showDeleteConfirmationDialog(selectedFName,selectedLName,selectedCourse,selectedCompany);
                 },
-                child: Text('Delete Item'),
+                child: Text('Delete Item',style: TextStyle(color: Colors.black)),
               ),
               ElevatedButton(
                 onPressed: () {
+                  Navigator.pop(context);
                   _showEditDialog(selectedFName,selectedLName,selectedCourse,selectedCompany, _editFNameController,_editLNameController,_editCourseController,_editCompanyController,index);
                 },
-                child: Text('Edit Item'),
+                child: Text('Edit Item',style: TextStyle(color: Colors.black)),
               ),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text('Exit'),
+                child: Text('Exit',style: TextStyle(color: Colors.black)),
               ),
             ],
           ),
@@ -294,26 +319,27 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _showDeleteConfirmationDialog(String selectedName) {
+  void _showDeleteConfirmationDialog(String selectedFName,String selectedLName,String selectedCourse,String selectedCompany) {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: Text('Delete Item'),
-          content: Text('Are you sure want to delete $selectedName?'),
+          // actionsAlignment: MainAxisAlignment.center,
+          content: Text('Are you sure want to delete \n$selectedFName $selectedLName?'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('No'),
+              child: Text('No',style: TextStyle(color: Colors.blue.shade700)),
             ),
             TextButton(
               onPressed: () {
-                _deleteItem(selectedName);
+                _deleteItem(selectedFName,selectedLName,selectedCourse,selectedCompany);
                 Navigator.pop(context);
               },
-              child: Text('Yes'),
+              child: Text('Yes',style: TextStyle(color: Colors.blue.shade700)),
             ),
           ],
         );
@@ -321,9 +347,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _deleteItem(String selectedName) {
+  void _deleteItem(String selectedName,String selectedLName,String selectedCourse,String selectedCompany) {
     setState(() {
-      _nameList.remove(selectedName);
+      _nameList.removeWhere((item) => item.fName == selectedName);
+      _nameList.removeWhere((item) => item.lName == selectedLName);
+      _nameList.removeWhere((item) => item.courseName == selectedCourse);
+      _nameList.removeWhere((item) => item.companyName == selectedCompany);
     });
   }
 
@@ -338,7 +367,6 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text('Update User Data'),
           content: Container(
             width: size.width-400,
-            // height: size.height*0.6,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -357,14 +385,14 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('Cancel'),
+              child: Text('Cancel',style: TextStyle(color: Colors.blue.shade700)),
             ),
             TextButton(
               onPressed: () {
                 _editItem(selectedFName, editFNameController.text,selectedLName, editLNameController.text,selectedCourse, editCourseController.text,selectedCompany, editCompanyController.text,index);
                 Navigator.pop(context);
               },
-              child: Text('Save'),
+              child: Text('Save',style: TextStyle(color: Colors.blue.shade700)),
             ),
           ],
         );
