@@ -141,7 +141,7 @@ class stateCallSmsTaskPage extends State<CallSmsTaskPage> {
                       child: TextField(
                         controller: _subjectController,
                         cursorColor: Colors.blue.shade700,
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                             labelText: ' Enter Subject',
                             focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.blue.shade700)),
