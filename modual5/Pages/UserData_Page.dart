@@ -47,6 +47,7 @@ class _UserDataEnterPageState extends State<UserDataEnterPage> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.blue,
@@ -181,12 +182,9 @@ class _UserDataEnterPageState extends State<UserDataEnterPage> {
 
                                 if(pickedTime != null ){
                                   print(pickedTime.format(context));
-                                  // DateTime parsedTime = DateFormat.jm().parse(pickedTime.format(context).toString());
-                                  // print(parsedTime);
-                                  // String formattedTime = DateFormat('HH:mm:ss').format(parsedTime);
-                                  // print(formattedTime);
+                                  DateTime dateTime = DateTime(2022, 1, 1, pickedTime.hour, pickedTime.minute);
                                   setState(() {
-                                    timeInputController.text = pickedTime.toString();
+                                    timeInputController.text = DateFormat('h:mm a').format(dateTime);;
                                   });
                                 }else{
                                   print("Time is not selected");

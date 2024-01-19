@@ -22,11 +22,14 @@ class _HomePageState extends State<HomePage> {
   TextEditingController dateInputController = TextEditingController();
   TextEditingController timeInputController = TextEditingController();
    SampleItem? selectedMenu;
+   bool isComplete = false;
   List<Map<String,dynamic>> getUserDataList = [];
 
   Future<void>refreshUserData()async{
     final userData = await SQLiteDatabase.getAllData();
-    getUserDataList = userData;
+    setState(() {
+      getUserDataList = userData;
+    });
   }
 
 
@@ -66,76 +69,85 @@ class _HomePageState extends State<HomePage> {
             itemBuilder: (context,index){
             final mainIndex = getUserDataList[index];
             var priority = mainIndex['priority'];
-            return CustomTile(
-              id: mainIndex['id'],
-              color: priority == 'High'?Colors.red: priority == 'Medium'?primeColor:priority == 'Low'?Colors.green:white,
-              priorityColor: priority == 'High'?Colors.red.shade900: priority == 'Medium'?Colors.blue.shade900:priority == 'Low'?Colors.green.shade900:white,
-              priority: priority,
-              userName: mainIndex['name'],
-              description: mainIndex['desc'],
-              date: mainIndex['picDate'],
-              time: mainIndex['picTime']);
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CustomTile(
+                id: mainIndex['id'],
+                color: isComplete?greyColor:priority == 'High'?Colors.red: priority == 'Medium'?primeColor:priority == 'Low'?Colors.green:white,
+                // priorityColor: priority == 'High'?Colors.red.shade900: priority == 'Medium'?Colors.blue.shade900:priority == 'Low'?Colors.green.shade900:white,
+                priorityColor: white,
+                priority: priority,
+                userName: mainIndex['name'],
+                description: mainIndex['desc'],
+                date: mainIndex['picDate'],
+                time: mainIndex['picTime']),
+            );
         }),
       ),
     );
   }
 
   Widget CustomTile({required int id,required Color color,required Color priorityColor,required String priority,required String userName,required String description,required String date,required String time}){
-    return Row(
-      children: [
-        Container(
-          width: 80,
-          height: 80,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: color,
+    return InkWell(
+      onLongPress: (){
+        showTaskComplete();
+      },
+      child: Row(
+        children: [
+          Container(
+            width: 80,
+            height: 80,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: color,
+            ),
+            child: Text(priority,style: CustomStyle.AppStyle(color: priorityColor,fontSize: 14,fontWeight: FontWeight.w500),),
           ),
-          child: Text(priority,style: CustomStyle.AppStyle(color: priorityColor,fontSize: 12),),
-        ),
-        SizedBox(width: 10,),
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(userName,style: CustomStyle.AppStyle(color: priorityColor,fontSize: 18),),
-              // SizedBox(height: 2,),
-              Text('Date : $date',textAlign: TextAlign.right,style: CustomStyle.AppStyle(color: priorityColor,fontSize: 10),),
-              Text('Time :$time',textAlign: TextAlign.right,style: CustomStyle.AppStyle(color: priorityColor,fontSize: 10),),
-              SizedBox(height: 2,),
-              Text(description,maxLines: 4,textAlign: TextAlign.left,style: CustomStyle.AppStyle(color: priorityColor,fontSize: 10),),
-            ],
+          SizedBox(width: 10,),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(userName,style: CustomStyle.AppStyle(color: primeColor,fontSize: 18),),
+                // SizedBox(height: 2,),
+                Text('Date : $date',textAlign: TextAlign.right,style: CustomStyle.AppStyle(color: greyColor,fontSize: 10),),
+                Text('Time :$time',textAlign: TextAlign.right,style: CustomStyle.AppStyle(color: greyColor,fontSize: 10),),
+                SizedBox(height: 2,),
+                Text(description,maxLines: 4,textAlign: TextAlign.left,style: CustomStyle.AppStyle(color: greyColor,fontSize: 10),),
+              ],
+            ),
           ),
-        ),
-        Center(
-          child: PopupMenuButton<SampleItem>(
-            iconColor: greyColor,
-            initialValue: selectedMenu,
-            onSelected: (SampleItem item) {
-              setState(() {
-                selectedMenu = item;
-              });
-            },
-            itemBuilder: (BuildContext context) => <PopupMenuEntry<SampleItem>>[
-               PopupMenuItem<SampleItem>(
-                value: SampleItem.itemOne,
-                child: Text('Edit'),
-                onTap: (){
-                  showUserUpdate(userName: userName, description: description, priority: priority, oldDate: date, oldTime: time);
-                },
-              ),
-               PopupMenuItem<SampleItem>(
-                value: SampleItem.itemTwo,
-                onTap: (){
-                  showDeleteUserData(id, userName);
-                },
-                child: Text('Delete'),
-              ),
+          Center(
+            child: PopupMenuButton<SampleItem>(
+              iconColor: greyColor,
+              initialValue: selectedMenu,
+              onSelected: (SampleItem item) {
+                setState(() {
+                  selectedMenu = item;
+                });
+              },
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<SampleItem>>[
+                 PopupMenuItem<SampleItem>(
+                  value: SampleItem.itemOne,
+                  child: Text('Edit'),
+                  onTap: (){
+                    showUserUpdate(userName: userName, description: description, priority: priority, oldDate: date, oldTime: time);
+                  },
+                ),
+                 PopupMenuItem<SampleItem>(
+                  value: SampleItem.itemTwo,
+                  onTap: (){
+                    showDeleteUserData(id, userName);
+                  },
+                  child: Text('Delete'),
+                ),
 
-            ],
-          ),
-        )
-      ],
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -146,13 +158,13 @@ class _HomePageState extends State<HomePage> {
       final size = MediaQuery.of(context).size;
       return Dialog(
         child: Container(
-          height: size.height*0.78,
-          padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-          margin: EdgeInsets.symmetric(horizontal: 20),
+          height: size.height-100,
+          padding: EdgeInsets.symmetric(horizontal: 5,vertical: 5),
+          margin: EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Icon(Icons.account_circle_outlined,color: primeColor,size: 50,),
               ),
               Padding(
@@ -277,11 +289,11 @@ class _HomePageState extends State<HomePage> {
                                     print(pickedTime.format(context));
                                     DateTime parsedTime = DateFormat.jm().parse(pickedTime.format(context).toString());
                                     print(parsedTime);
-                                    String formattedTime = DateFormat('HH:mm:ss').format(parsedTime);
-                                    print(formattedTime);
+                                    DateTime dateTime = DateTime(2022, 1, 1, pickedTime.hour, pickedTime.minute);
                                     setState(() {
-                                      timeInputController.text = formattedTime;
+                                      timeInputController.text = DateFormat('h:mm a').format(dateTime);;
                                     });
+
                                   }else{
                                     print("Time is not selected");
                                   }
@@ -344,6 +356,47 @@ class _HomePageState extends State<HomePage> {
                         backgroundColor: primeColor,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),elevation: 1.5),
                     child: Text('Delete',style: CustomStyle.AppStyle(color: Colors.white,),)),
+              )
+            ],
+          ),
+        ),
+      );
+    });
+  }
+
+  showTaskComplete(){
+    showDialog(context: context, builder: (context){
+      final size = MediaQuery.of(context).size;
+      return Dialog(
+        child: Container(
+          height: size.height*0.25,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Icon(Icons.account_circle_outlined,color: primeColor,size: 50,),
+              ),
+              Text('Are sure want to complete this',style: CustomStyle.AppStyle(color: Colors.black,),),
+              Text('complete this task?',style: CustomStyle.AppStyle(color: Colors.black,),),
+              Container(
+                width:  size.width*0.6,
+                margin: EdgeInsets.only(top: size.height*0.035),
+                child: ElevatedButton(onPressed: ()async{
+
+                  // await SQLiteDatabase.deleteData(id);
+                  // refreshUserData();
+
+                  setState(() {
+                    isComplete = true;
+                  });
+                  print('isComplete $isComplete');
+                  Navigator.of(context).pop();
+                  CustomDialog(context: context, title: 'Successfully complete task...',icon: Icons.file_download_done);
+                },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: primeColor,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),elevation: 1.5),
+                    child: Text('Complete',style: CustomStyle.AppStyle(color: Colors.white,),)),
               )
             ],
           ),
