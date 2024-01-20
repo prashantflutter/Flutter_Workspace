@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'AppColors.dart';
 import 'AppStyle.dart';
 
+
 Widget CustomTextField({required TextEditingController controller,required String hintText,Widget? prefixIcon,int? maxLines = 1}){
   return  Padding(
     padding: EdgeInsets.only(bottom: 20),
@@ -21,15 +22,14 @@ Widget CustomTextField({required TextEditingController controller,required Strin
         ),
         // prefixIcon: Icon(Icons.account_circle_outlined,color: primeColor,)
         prefixIcon: prefixIcon,
-        // contentPadding: EdgeInsets.zero,
+        contentPadding: EdgeInsets.only(left: 10),
       ),
 
     ),
   );
 }
 
-
-Widget CustomTextField2({required TextEditingController controller,required String hintText,Widget? prefixIcon,int? maxLines = 1,void Function(String)? onChanged}){
+Widget CustomSearchField({required TextEditingController controller,required String hintText,Widget? prefixIcon,int? maxLines = 1,void Function(String)? onChanged}){
   return  TextFormField(
     controller: controller,
     cursorColor: white,
@@ -50,7 +50,7 @@ Widget CustomTextField2({required TextEditingController controller,required Stri
       ),
       // prefixIcon: Icon(Icons.account_circle_outlined,color: primeColor,)
       prefixIcon: prefixIcon,
-      // contentPadding: EdgeInsets.zero,
+      contentPadding: EdgeInsets.only(left: 10),
     ),
     onChanged:onChanged,
 
@@ -81,6 +81,38 @@ Widget CustomTitle({required String title}){
   );
 }
 
+Widget CustomDateTimeField({required TextEditingController controller,required String title,Widget? prefixIcon,String? hintText,void Function()? onTap}){
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      CustomTitle(title: title),
+      Container(
+          child:Center(
+              child:TextField(
+                controller: controller,
+                readOnly: true,
+                decoration: InputDecoration(
+                  prefixIcon: prefixIcon,
+                  hintText: hintText,
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: BorderSide(color: primeColor)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: BorderSide(color: primeColor)
+                  ),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10)
+                ),
+
+                onTap:onTap,
+              )
+          )
+      ),
+    ],
+  );
+}
 
 ScaffoldFeatureController<SnackBar, SnackBarClosedReason> CustomDialog({required BuildContext context,required String title,Color backgroundColor = Colors.green,IconData? icon}){
   return  ScaffoldMessenger.of(context).showSnackBar(

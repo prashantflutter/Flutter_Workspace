@@ -77,7 +77,7 @@ class SQLiteDatabase {
     return result;
   }
 
-
+// SingleData Update in Database using this Method
   static Future<int>updateSingleData(int id,String? task)async{
     final db =  await SQLiteDatabase.db();
     final data = {

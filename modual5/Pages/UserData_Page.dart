@@ -50,17 +50,17 @@ class _UserDataEnterPageState extends State<UserDataEnterPage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.blue,
-        title: Text('User Enter Details',style: CustomStyle.AppStyle(color: Colors.white,fontSize: 18)),
+        title: Text('User Enter Tasks',style: CustomStyle.AppStyle(color: Colors.white,fontSize: 18)),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: size.width*0.08),
+        padding: EdgeInsets.symmetric(horizontal: size.width*0.07),
         child: Column(
           children: [
             SizedBox(height: 15,),
-            CustomTitle(title: 'Name*'),
-            CustomTextField(controller: nameController, hintText: 'Enter Name',),
-            CustomTitle(title: 'Description*'),
-            CustomTextField(controller: descController, hintText: 'Enter Description',maxLines: 3),
+            CustomTitle(title: 'Task Name*'),
+            CustomTextField(controller: nameController, hintText: 'Enter Task Name',),
+            CustomTitle(title: 'Task Description*'),
+            CustomTextField(controller: descController, hintText: 'Enter Task Description',maxLines: 4),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -104,95 +104,57 @@ class _UserDataEnterPageState extends State<UserDataEnterPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomTitle(title: 'Date*'),
-                    Container(
-                        width: size.width*0.4,
-                        child:Center(
-                            child:TextField(
-                              controller: dateInputController,
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.calendar_today,color: primeColor,),
-                                hintText: "Select Date",
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(6),
-                                    borderSide: BorderSide(color: primeColor)
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(6),
-                                    borderSide: BorderSide(color: primeColor)
-                                ),
-                              ),
-                              readOnly: true,
-                              onTap: () async {
-                                DateTime? pickedDate = await showDatePicker(
-                                    context: context, initialDate: DateTime.now(),
-                                    firstDate: DateTime(2000),
-                                    lastDate: DateTime(2101)
-                                );
+                Container(
+                    width: size.width*0.4,
+                    child:CustomDateTimeField(
+                        controller: dateInputController,
+                        title: 'Date*',
+                        prefixIcon: Icon(Icons.calendar_today,color: primeColor,),
+                       hintText: "Select Date",
+                       onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                            context: context, initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2101)
+                        );
 
-                                if(pickedDate != null ){
-                                  print(pickedDate);
-                                  String formattedDate = DateFormat('dd-MM-yyy').format(pickedDate);
-                                  print(formattedDate);
-                                  setState(() {
-                                    dateInputController.text = formattedDate;
-                                  });
-                                }else{
-                                  print("Date is not selected");
-                                }
-                              },
-                            )
-                        )
-                    ),
-                  ],
+                        if(pickedDate != null ){
+                          print(pickedDate);
+                          String formattedDate = DateFormat('dd-MM-yyy').format(pickedDate);
+                          print(formattedDate);
+                          setState(() {
+                            dateInputController.text = formattedDate;
+                          });
+                        }else{
+                          print("Date is not selected");
+                        }
+                      },
+                    )
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomTitle(title: 'Time*'),
-                    Container(
-                        width: size.width*0.4,
-                        child:Center(
-                            child:TextField(
-                              controller: timeInputController,
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.watch_later_outlined,color: primeColor,),
-                                hintText: "Select Time",
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(6),
-                                    borderSide: BorderSide(color: primeColor)
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(6),
-                                    borderSide: BorderSide(color: primeColor)
-                                ),
-                              ),
-                              readOnly: true,
-                              onTap: () async {
-                                TimeOfDay? pickedTime =  await showTimePicker(
-                                  initialTime: TimeOfDay.now(),
-                                  context: context,
-                                );
+                Container(
+                    width: size.width*0.4,
+                    child:CustomDateTimeField(
+                      controller: timeInputController,
+                      title: 'Time*',
+                      prefixIcon: Icon(Icons.watch_later_outlined,color: primeColor,),
+                      hintText: "Select Time",
+                      onTap: () async {
+                        TimeOfDay? pickedTime =  await showTimePicker(
+                          initialTime: TimeOfDay.now(),
+                          context: context,
+                        );
 
-                                if(pickedTime != null ){
-                                  print(pickedTime.format(context));
-                                  DateTime dateTime = DateTime(2022, 1, 1, pickedTime.hour, pickedTime.minute);
-                                  setState(() {
-                                    timeInputController.text = DateFormat('h:mm a').format(dateTime);;
-                                  });
-                                }else{
-                                  print("Time is not selected");
-                                }
-                              },
-                            )
-                        )
-                    ),
-                  ],
+                        if(pickedTime != null ){
+                          print(pickedTime.format(context));
+                          DateTime dateTime = DateTime(2022, 1, 1, pickedTime.hour, pickedTime.minute);
+                          setState(() {
+                            timeInputController.text = DateFormat('h:mm a').format(dateTime);;
+                          });
+                        }else{
+                          print("Time is not selected");
+                        }
+                      },
+                    )
                 ),
               ],
             ),
@@ -206,9 +168,7 @@ class _UserDataEnterPageState extends State<UserDataEnterPage> {
                       backgroundColor: primeColor,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),elevation: 1.5),
                   child: Text('Submit',style: CustomStyle.AppStyle(color: Colors.white,),)),
-            )
-
-
+            ),
           ],
         ),
       ),
