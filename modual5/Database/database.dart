@@ -14,6 +14,7 @@ class SQLiteDatabase {
     priority TEXT,
     picDate TEXT,
     picTime TEXT,
+    task TEXT,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP 
     )""");
   }
@@ -27,7 +28,7 @@ class SQLiteDatabase {
 
 
   // Create Method for store data in database
-  static Future<int> createData(String name,String desc,String priority,String picDate,String picTime)async{
+  static Future<int> createData(String name,String desc,String priority,String picDate,String picTime,String? task)async{
 
     // SQLiteDatabase class Name where created and all data pass in created object
 
@@ -38,6 +39,7 @@ class SQLiteDatabase {
       'priority':priority,
       'picDate':picDate,
       'picTime':picTime,
+      'task':task,
     };
     final id = await db.insert('userData', data,conflictAlgorithm: sql.ConflictAlgorithm.replace);
     return id;
@@ -60,7 +62,7 @@ class SQLiteDatabase {
 
 
   // Update Data in Database using this Method
-  static Future<int>updateData(int id,String? name,String? desc,String? priority,String? picDate,String? picTime)async{
+  static Future<int>updateData(int id,String? name,String? desc,String? priority,String? picDate,String? picTime, {String? task})async{
     final db =  await SQLiteDatabase.db();
     final data = {
       'name':name,
@@ -68,6 +70,18 @@ class SQLiteDatabase {
       'priority':priority,
       'picDate':picDate,
       'picTime':picTime,
+      'task':task,
+      'createdAt':DateTime.now().toString()
+    };
+    final result = await db.update('userData', data,where: 'id = ?',whereArgs: [id]);
+    return result;
+  }
+
+
+  static Future<int>updateSingleData(int id,String? task)async{
+    final db =  await SQLiteDatabase.db();
+    final data = {
+      'task':task,
       'createdAt':DateTime.now().toString()
     };
     final result = await db.update('userData', data,where: 'id = ?',whereArgs: [id]);
@@ -84,7 +98,10 @@ class SQLiteDatabase {
     }
   }
 
-
+  Future<List<Map<String, dynamic>>> searchDataByName(String name) async {
+    final db = await SQLiteDatabase.db();
+    return await db.query('userData', where: 'name LIKE ?', whereArgs: ['%$name%']);
+  }
 
 
 

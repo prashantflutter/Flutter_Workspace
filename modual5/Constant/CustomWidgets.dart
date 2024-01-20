@@ -28,6 +28,35 @@ Widget CustomTextField({required TextEditingController controller,required Strin
   );
 }
 
+
+Widget CustomTextField2({required TextEditingController controller,required String hintText,Widget? prefixIcon,int? maxLines = 1,void Function(String)? onChanged}){
+  return  TextFormField(
+    controller: controller,
+    cursorColor: white,
+    maxLines: maxLines,
+    enableSuggestions: false,
+    autocorrect: false,
+    style: TextStyle(color: white,fontWeight: FontWeight.w400, decoration: TextDecoration.none, decorationThickness: 0,),
+    decoration: InputDecoration(
+      hintText: hintText,
+      hintStyle: CustomStyle.AppStyle(color: white,fontWeight: FontWeight.w400),
+      enabledBorder: UnderlineInputBorder(
+          borderRadius: BorderRadius.circular(6),
+          borderSide: BorderSide(color: white,width: 2)
+      ),
+      focusedBorder: UnderlineInputBorder(
+          borderRadius: BorderRadius.circular(6),
+          borderSide: BorderSide(color: white,width: 2)
+      ),
+      // prefixIcon: Icon(Icons.account_circle_outlined,color: primeColor,)
+      prefixIcon: prefixIcon,
+      // contentPadding: EdgeInsets.zero,
+    ),
+    onChanged:onChanged,
+
+  );
+}
+
 Widget CustomRadioButton({required String title,required String value,required String? groupValue,required void Function(String?)? onChanged}){
   return Row(
     children: [
