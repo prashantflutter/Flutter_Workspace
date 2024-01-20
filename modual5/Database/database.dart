@@ -98,6 +98,7 @@ class SQLiteDatabase {
     }
   }
 
+  // Search List by Name in HomePage Screen by This Method
   Future<List<Map<String, dynamic>>> searchDataByName(String name) async {
     final db = await SQLiteDatabase.db();
     return await db.query('userData', where: 'name LIKE ?', whereArgs: ['%$name%']);
