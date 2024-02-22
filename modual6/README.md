@@ -1,4 +1,4 @@
-# e_notebook
+# Chatter App
 
 A new Flutter project.
 
