@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "584790907464",
+    "project_id": "careerguideline-c6d0d",
+    "storage_bucket": "careerguideline-c6d0d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584790907464:android:5bb6949c4c5e9fe986167d",
+        "android_client_info": {
+          "package_name": "com.prashantdev.careerguideline"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjY6MvxGg6yj6EL414B6ZjuXSRakfNVAQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
