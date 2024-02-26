@@ -48,7 +48,7 @@ class UserProfilePage extends StatelessWidget {
 
                   MyButton(title: 'Delete Account',width: 200, onPressed: (){
                     LogoutNow(context: context,
-                        title: 'Are sure want to logout?',
+                        title: 'are you sure to delete your account?',
                         sub1: 'Yes',
                         sub2: 'No',
                         onPressed1: (){

@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
         body: Center(
           child: _pages.elementAt(_selectedIndex), //New
         ),
-        drawer: MyDrawer(context, id: widget.id.toString(),),
+        drawer: MyDrawer(context, id:UserID,),
         bottomNavigationBar: MyNavigationBar(
             onTap:_onItemTapped,currentIndex: _selectedIndex),
       ),

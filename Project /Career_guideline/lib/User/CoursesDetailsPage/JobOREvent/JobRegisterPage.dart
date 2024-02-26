@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:careerguideline/AppConstant/AppTextStyle.dart';
 import 'package:careerguideline/AppConstant/Appcolors.dart';
+import 'package:careerguideline/User/Pages/HomePage.dart';
 import 'package:careerguideline/Widgets/ButtonWidgets.dart';
 import 'package:careerguideline/Widgets/MyAppBar.dart';
 import 'package:careerguideline/Widgets/TextFormWidgets.dart';
@@ -53,7 +54,7 @@ class _JobRegisterPageState extends State<JobRegisterPage> {
         nameController.clear();
         emailController.clear();
         dateController.clear();
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> AdminHomePage(id: '',)));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
         log('Job Apply Success!');
         MyToastMSG(text: 'Job Apply Success!', context: context);
       }on FirebaseAuthException catch(ex){
@@ -86,7 +87,7 @@ class _JobRegisterPageState extends State<JobRegisterPage> {
         nameController.clear();
         emailController.clear();
         dateController.clear();
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> AdminHomePage(id: '',)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
         log('Event Register  Success!');
         MyToastMSG(text: 'Event Register  Success!', context: context);
       }on FirebaseAuthException catch(ex){

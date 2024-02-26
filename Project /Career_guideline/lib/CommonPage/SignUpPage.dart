@@ -59,24 +59,24 @@ class _LoginPageState extends State<SignUpPage> {
             FirebaseFirestore.instance.collection('AdminAccountDataList').add(accountData);
 
             log('isAdmin == ${widget.isAdmin}');
-            identify = loginData.getString('identify') ?? '';
+            // identify = loginData.getString('identify') ?? '';
             MyToastMSG(text: 'successfully signup...', context: context);
             Navigator.pushReplacement(context, MaterialPageRoute(
-                builder: (context) => LoginPage(isAdmin: identify)));
+                builder: (context) => LoginPage(isAdmin: 'Admin')));
 
         }
         else {
             loginData.setBool('login', false);
             loginData.setString('uname', name);
             FirebaseFirestore.instance.collection('UserAccountDataList').add(accountData);
-            widget.isAdmin == true
-                ? loginData.setString('identify', 'Admin')
-                : loginData.setString('identify', 'User');
+            // widget.isAdmin == true
+            //     ? loginData.setString('identify', 'Admin')
+            //     : loginData.setString('identify', 'User');
             log('isAdmin == ${widget.isAdmin}');
             identify = loginData.getString('identify') ?? '';
             MyToastMSG(text: 'successfully signup...', context: context);
             Navigator.pushReplacement(context, MaterialPageRoute(
-                builder: (context) => LoginPage(isAdmin: identify)));
+                builder: (context) => LoginPage(isAdmin: 'User')));
         }
       } on FirebaseException catch (ex) {
         ErrorDialog(context: context,

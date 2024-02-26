@@ -45,13 +45,18 @@ Widget MyDrawer(BuildContext context,{bool isAdmin = false,required String id}){
             Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
           }
         }),
-        MyListTiles(title: isAdmin?'Admin Profile':'User Profile',onTap: (){
+        MyListTiles(title: isAdmin?'Admin Profile':'User Profile',onTap: ()async{
           Navigator.pop(context);
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          preferences.getString('key')?? '';
           if(isAdmin){
-            print('Drawer id : $id');
+            print('Admin Profile id : $id');
             Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminProfilePage(id: id,)));
           }else{
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>UserProfilePage(id: id,)));
+            final UserID = preferences.getString('UserID')?? '';
+            print('UserProfile id : $UserID');
+
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>UserProfilePage(id: UserID,)));
           }
         }, icon: Icons.account_circle_outlined),
         MyListTiles(title: 'Logout',onTap: (){
